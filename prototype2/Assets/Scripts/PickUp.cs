@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    public GameObject magicCube;
-    public GameObject wall;
-    public GameObject particles;
-
-    public AudioSource soundEffect;
-
+    public Transform parent;
+    private bool pickedUp = false;
     // Update is called once per frame
     void Update()
     {
-
-        
+        var anim = gameObject.GetComponent<Animator>();
+       if (Input.GetMouseButtonDown(0) && pickedUp)
+       {
+            anim.enabled = true;
+            anim.Play("pick");
+       }
     }
 
     void OnMouseDown(){
-        Destroy (magicCube);
-        Destroy (wall);
-
-        particles.SetActive(true);
-        // soundEffect.SetActive(true);
-        soundEffect.PlayOneShot(soundEffect.clip, 1);
+        Debug.Log("clicked");
+        this.transform.SetParent(parent);
+        this.pickedUp = true;
+        
+        this.transform.localPosition = new Vector3(0.4f,0,0);
+        this.transform.localEulerAngles = new Vector3(0, 90, 45);
     }
 }
